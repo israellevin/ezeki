@@ -8,13 +8,13 @@ const displayPage = async source => {
     display.classList.add('display');
     display.classList.add('loading');
 
-    const closer = document.createElement('div');
+    const closer = document.createElement('span');
     closer.addEventListener('click', () => display.parentNode.removeChild(display));
     closer.classList.add('closer');
     closer.appendChild(document.createTextNode('[סגור]'));
     display.appendChild(closer);
 
-    const editor = document.createElement('div');
+    const editor = document.createElement('span');
     editor.addEventListener('click', () =>
         document.location.href = 'https://github.com/israellevin/ezeki/edit/master/' + source);
     editor.classList.add('editor');
@@ -26,11 +26,12 @@ const displayPage = async source => {
     if(text === '404: Not Found'){
         document.location.href = 'https://github.com/israellevin/ezeki/new/master/?filename=' + source;
     }
-    display.appendChild(document.createTextNode(text));
+    const contentDiv = document.createElement('div');
+    contentDiv.appendChild(document.createTextNode(text));
+    display.appendChild(contentDiv);
     display.classList.remove('loading');
 };
 
-console.log(await gettext('npc/nosuch'));
 let npcs = await getjson('npc');
 const npcRow = document.createElement('tr');
 const opinionRows = document.createElement('tbody');
